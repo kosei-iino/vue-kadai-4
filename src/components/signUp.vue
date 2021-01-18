@@ -55,20 +55,13 @@ export default {
     };
   },
   methods: {
-    //サインアップ
-    async signup() {
-      try {
-        const res = await this.$firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.mailAddress, this.password);
-
-        await res.user.updateProfile({
-          displayName: this.userName,
-        });
-        console.log(res);
-      } catch (e) {
-        console.log(e);
-      }
+    signup() {
+      //サインアップ
+      this.$store.commit('signup', {
+        userName: this.userName,
+        mailAddress: this.mailAddress,
+        password: this.password,
+      });
     },
   },
 };
