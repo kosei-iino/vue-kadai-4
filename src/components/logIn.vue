@@ -29,7 +29,7 @@
 
     <!--ページ移動-->
     <span class="buttons">
-      <button @click="logIn()">ログイン</button>
+      <button @click="login()">ログイン</button>
     </span>
     <br />
     <button @click="movePage('signUp')">新規登録はこちら</button>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import firebase from '../firebase.config';
+
 export default {
   name: 'logIn',
   data() {
@@ -45,10 +47,13 @@ export default {
       password: '',
     };
   },
+  created() {
+    firebase.onAuth();
+  },
   methods: {
-    logIn() {
+    login() {
       //ログイン
-      this.$store.dispatch('logIn', {
+      firebase.login({
         mailAddress: this.mailAddress,
         password: this.password,
       });

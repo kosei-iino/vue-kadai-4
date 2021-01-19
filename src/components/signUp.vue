@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import firebase from '../firebase.config';
+
 export default {
   name: 'signUp',
   data() {
@@ -54,10 +56,13 @@ export default {
       password: '',
     };
   },
+  created() {
+    firebase.onAuth();
+  },
   methods: {
     signup() {
       //サインアップ
-      this.$store.dispatch('signup', {
+      firebase.signup({
         userName: this.userName,
         mailAddress: this.mailAddress,
         password: this.password,
