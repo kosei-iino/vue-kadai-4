@@ -1,21 +1,13 @@
 <template>
-  <div class="signUp">
+  <div class="logIn">
     <!--ヘッダー-->
     <header>
-      <p>新規登録画面</p>
+      <p>ログイン</p>
     </header>
 
     <!--内容-->
     <div class="content">
       <table>
-        <tr>
-          <td>
-            <label class="title">ユーザ名</label>
-          </td>
-          <td>
-            <input type="text" placeholder="UserName" v-model="userName" />
-          </td>
-        </tr>
         <tr>
           <td>
             <label class="title">メールアドレス</label>
@@ -37,28 +29,26 @@
 
     <!--ページ移動-->
     <span class="buttons">
-      <button @click="signup()">新規登録</button>
+      <button @click="logIn()">ログイン</button>
     </span>
     <br />
-    <button @click="movePage('/')">ログインはこちら</button>
+    <button @click="movePage('signUp')">新規登録はこちら</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'signUp',
+  name: 'logIn',
   data() {
     return {
-      userName: '',
       mailAddress: '',
       password: '',
     };
   },
   methods: {
-    signup() {
-      //サインアップ
-      this.$store.dispatch('signup', {
-        userName: this.userName,
+    logIn() {
+      //ログイン
+      this.$store.dispatch('logIn', {
         mailAddress: this.mailAddress,
         password: this.password,
       });

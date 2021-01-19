@@ -31,5 +31,17 @@ export default new Vuex.Store({
                 console.log(e);
             }
         },
+        async logIn(context, data) {
+            try {
+                const res = await firebase
+                    .auth()
+                    .signInWithEmailAndPassword(data.mailAddress, data.password);
+
+                context.commit('userSave', res);
+
+            } catch (e) {
+                console.log(e);
+            }
+        },
     }
 })
