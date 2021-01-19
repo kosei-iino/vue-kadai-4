@@ -11,7 +11,12 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        async signup(state, data) {
+        userSave(state, data) {
+            state.user.userData = data;
+        }
+    },
+    actions: {
+        async signup(context, data) {
             try {
                 const res = await firebase
                     .auth()
@@ -20,7 +25,8 @@ export default new Vuex.Store({
                 await res.user.updateProfile({
                     displayName: data.userName,
                 });
-                state.user.userData = res;
+                context.commit('userSave', res);
+
             } catch (e) {
                 console.log(e);
             }

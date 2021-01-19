@@ -57,7 +57,7 @@ export default {
   methods: {
     signup() {
       //サインアップ
-      this.$store.commit('signup', {
+      this.$store.dispatch('signup', {
         userName: this.userName,
         mailAddress: this.mailAddress,
         password: this.password,
