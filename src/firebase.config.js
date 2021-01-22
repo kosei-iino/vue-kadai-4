@@ -10,4 +10,5 @@ const firebaseConfig = {
   measurementId: "G-VHDQMNLQTT"
 }
 firebase.initializeApp(firebaseConfig);
-export default firebase;
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+export default firebase
