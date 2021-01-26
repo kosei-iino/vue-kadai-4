@@ -37,7 +37,7 @@
 
     <!--ページ移動-->
     <span class="buttons">
-      <button @click="signup()">新規登録</button>
+      <button @click="signup('dashBoard')">新規登録</button>
     </span>
     <br />
     <button @click="movePage('/')">ログインはこちら</button>
@@ -58,13 +58,14 @@ export default {
     this.$store.dispatch('onAuth');
   },
   methods: {
-    signup() {
+    async signup(pageName) {
       //サインアップ
-      this.$store.dispatch('signup', {
+      await this.$store.dispatch('signup', {
         userName: this.userName,
         mailAddress: this.mailAddress,
         password: this.password,
       });
+      this.$router.push(pageName);
     },
     //ページ遷移
     movePage(pageName) {

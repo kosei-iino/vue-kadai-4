@@ -29,7 +29,7 @@
 
     <!--ページ移動-->
     <span class="buttons">
-      <button @click="login()">ログイン</button>
+      <button @click="login('dashBoard')">ログイン</button>
     </span>
     <br />
     <button @click="movePage('signUp')">新規登録はこちら</button>
@@ -49,12 +49,13 @@ export default {
     this.$store.dispatch('onAuth');
   },
   methods: {
-    login() {
+    async login(pageName) {
       //ログイン
-      this.$store.dispatch('login', {
+      await this.$store.dispatch('login', {
         mailAddress: this.mailAddress,
         password: this.password,
       });
+      this.$router.push(pageName);
     },
     //ページ遷移
     movePage(pageName) {
