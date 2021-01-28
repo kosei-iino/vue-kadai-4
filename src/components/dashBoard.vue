@@ -1,6 +1,7 @@
 <template>
   <div class="dashBoard">
     <header>
+      <button @click="logout()">ログアウト</button>
       <p>{{ userData.displayName }}さん、ようこそ！！</p>
       <p>残高：{{ userData.wallet }}</p>
     </header>
@@ -28,6 +29,12 @@ export default {
   computed: {
     userData() {
       return this.$store.getters.getUser;
+    },
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout');
+      this.$router.push('/');
     },
   },
 };

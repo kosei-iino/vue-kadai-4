@@ -47,6 +47,14 @@ export default new Vuex.Store({
                 console.log(e);
             }
         },
+        async logout(context) {
+            try {
+                await firebase.auth().signOut();
+                context.commit('userSave', {});
+            } catch (e) {
+                console.log(e);
+            }
+        },
         async onAuth(context) {
             try {
                 await firebase.auth().onAuthStateChanged(user => {
