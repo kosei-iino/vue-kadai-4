@@ -1,11 +1,9 @@
 <template>
   <div class="logIn">
-    <!--ヘッダー-->
     <header>
       <p>ログイン</p>
     </header>
 
-    <!--内容-->
     <div class="content">
       <table>
         <tr>
@@ -27,9 +25,8 @@
       </table>
     </div>
 
-    <!--ページ移動-->
     <span class="buttons">
-      <button @click="login()">ログイン</button>
+      <button @click="login('dashBoard')">ログイン</button>
     </span>
     <br />
     <button @click="movePage('signUp')">新規登録はこちら</button>
@@ -49,16 +46,14 @@ export default {
     this.$store.dispatch('onAuth');
   },
   methods: {
-    login() {
-      //ログイン
-      this.$store.dispatch('login', {
+    async login(pageName) {
+      await this.$store.dispatch('login', {
         mailAddress: this.mailAddress,
         password: this.password,
       });
+      this.$router.push(pageName);
     },
-    //ページ遷移
     movePage(pageName) {
-      //指定のパスへ移動
       this.$router.push(pageName);
     },
   },
