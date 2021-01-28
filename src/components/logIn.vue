@@ -1,11 +1,9 @@
 <template>
   <div class="logIn">
-    <!--ヘッダー-->
     <header>
       <p>ログイン</p>
     </header>
 
-    <!--内容-->
     <div class="content">
       <table>
         <tr>
@@ -27,7 +25,6 @@
       </table>
     </div>
 
-    <!--ページ移動-->
     <span class="buttons">
       <button @click="login('dashBoard')">ログイン</button>
     </span>
@@ -50,16 +47,13 @@ export default {
   },
   methods: {
     async login(pageName) {
-      //ログイン
       await this.$store.dispatch('login', {
         mailAddress: this.mailAddress,
         password: this.password,
       });
       this.$router.push(pageName);
     },
-    //ページ遷移
     movePage(pageName) {
-      //指定のパスへ移動
       this.$router.push(pageName);
     },
   },

@@ -1,11 +1,9 @@
 <template>
   <div class="signUp">
-    <!--ヘッダー-->
     <header>
       <p>新規登録画面</p>
     </header>
 
-    <!--内容-->
     <div class="content">
       <table>
         <tr>
@@ -35,7 +33,6 @@
       </table>
     </div>
 
-    <!--ページ移動-->
     <span class="buttons">
       <button @click="signup('dashBoard')">新規登録</button>
     </span>
@@ -59,7 +56,6 @@ export default {
   },
   methods: {
     async signup(pageName) {
-      //サインアップ
       await this.$store.dispatch('signup', {
         userName: this.userName,
         mailAddress: this.mailAddress,
@@ -67,9 +63,7 @@ export default {
       });
       this.$router.push(pageName);
     },
-    //ページ遷移
     movePage(pageName) {
-      //指定のパスへ移動
       this.$router.push(pageName);
     },
   },

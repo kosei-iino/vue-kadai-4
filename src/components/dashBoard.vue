@@ -1,12 +1,10 @@
 <template>
   <div class="dashBoard">
-    <!--ヘッダー-->
     <header>
       <p>{{ userData.displayName }}さん、ようこそ！！</p>
       <p>残高：{{ userData.wallet }}</p>
     </header>
 
-    <!--内容-->
     <div class="content">
       <div>ユーザ一覧</div>
       <table>
