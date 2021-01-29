@@ -27,7 +27,7 @@
             <label class="title">パスワード</label>
           </td>
           <td>
-            <input type="text" placeholder="Password" v-model="password" />
+            <input type="password" placeholder="Password" v-model="password" />
           </td>
         </tr>
       </table>
