@@ -7,16 +7,21 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user: {
-            userData: {}
+            userData: {},
+            usersData: {}
         }
     },
     mutations: {
         userSave(state, userData) {
             state.user.userData = userData;
         },
+        usersSave(state, usersData) {
+            state.user.usersData = usersData;
+        }
     },
     getters: {
         getUser: state => state.user.userData,
+        getUsers: state => state.user.usersData
     },
     actions: {
         async signup(context, data) {
@@ -67,6 +72,12 @@ export default new Vuex.Store({
                                 context.commit('userSave', userContent);
                             }
                         });
+                    }
+                });
+                firebase.database().ref('users/').on("value", (data) => {
+                    if (data.val() !== null) {
+                        const databaseDatas = data.val();
+                        context.commit('usersSave', databaseDatas);
                     }
                 });
             } catch (e) {

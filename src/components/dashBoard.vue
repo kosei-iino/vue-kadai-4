@@ -15,6 +15,13 @@
           </td>
           <td></td>
         </tr>
+        <tr v-for="(users, key) in usersData" :key="key">
+          <td>{{ users.displayName }}</td>
+          <td>
+            <button @click="displayWallet(users.wallet)">walletを見る</button>
+          </td>
+          <td></td>
+        </tr>
       </table>
     </div>
   </div>
@@ -30,8 +37,14 @@ export default {
     userData() {
       return this.$store.getters.getUser;
     },
+    usersData() {
+      return this.$store.getters.getUsers;
+    },
   },
   methods: {
+    displayWallet(wallet) {
+      alert(wallet);
+    },
     async logout() {
       await this.$store.dispatch('logout');
       this.$router.push('/');
