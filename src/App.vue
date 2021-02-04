@@ -38,6 +38,9 @@
   display: flex;
   justify-content: space-between;
 }
+.status {
+  color: red;
+}
 h1 {
   text-align: center;
 }

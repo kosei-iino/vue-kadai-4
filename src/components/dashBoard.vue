@@ -1,16 +1,27 @@
 <template>
   <div class="dashBoard">
     <header>
-      <button click="logout()">ログアウト</button>
+      <button @click="logout">ログアウト</button>
     </header>
-    <br />
-
-    <div class="modal-content" v-show="showDialog">
-      <p>{{ this.watchName }}さんの残高</p>
-      <p>{{ this.watchWallet }}</p>
-      <p class="dialog-button"><button @click="hiddenWallet">close</button></p>
+    <p class="status">{{ status }}</p>
+    <div class="modal-content" v-show="showWalletDialog">
+      <p>{{ this.name }}さんの残高</p>
+      <p>{{ this.wallet }}</p>
+      <p class="dialog-button">
+        <button @click="hiddenWallet">close</button>
+      </p>
     </div>
-    <div class="fader" v-show="showDialog"></div>
+
+    <div class="modal-content" v-show="showSendDialog">
+      <p>あなたの残高：{{ userData.wallet }}</p>
+      <p>送る金額</p>
+      <input type="number" onkeydown="return event.keyCode !== 69" v-model="inputMoney" />
+      <p class="dialog-button">
+        <button @click="sendWallet">送信</button>
+      </p>
+    </div>
+
+    <div class="fader" v-show="showFader"></div>
 
     <div class="userInformation">
       <label>{{ userData.displayName }}さん、ようこそ！！</label>
@@ -28,11 +39,13 @@
         <tr v-for="(users, key) in usersData" :key="key">
           <td class="displayName">{{ users.displayName }}</td>
           <td>
-            <button @click="displayWallet(users.displayName, users.wallet)">
+            <button @click="displayWalletDialog(users.displayName, users.wallet)">
               walletを見る
             </button>
           </td>
-          <td></td>
+          <td>
+            <button @click="displaySendDialog(users.uid, users.wallet)">送る</button>
+          </td>
         </tr>
       </table>
     </div>
@@ -44,9 +57,15 @@ export default {
   name: 'dashBoard',
   data() {
     return {
-      showDialog: false,
-      watchName: '',
-      watchWallet: '',
+      showWalletDialog: false,
+      showSendDialog: false,
+      showFader: false,
+      uid: '',
+      name: '',
+      wallet: 0,
+      myWallet: 0,
+      inputMoney: '',
+      status: '',
     };
   },
   created() {
@@ -61,13 +80,34 @@ export default {
     },
   },
   methods: {
-    displayWallet(name, wallet) {
-      this.watchName = name;
-      this.watchWallet = wallet;
-      this.showDialog = true;
+    displayWalletDialog(name, wallet) {
+      this.name = name;
+      this.wallet = wallet;
+      this.showWalletDialog = true;
+      this.showFader = true;
+    },
+    displaySendDialog(uid, wallet) {
+      this.uid = uid;
+      this.wallet = wallet;
+      this.showSendDialog = true;
+      this.showFader = true;
+    },
+    async sendWallet() {
+      const user = this.$store.getters.getUser;
+      this.status = await this.$store.dispatch('sendWallet', {
+        uid: this.uid,
+        wallet: this.wallet,
+        inputMoney: this.inputMoney,
+        myUid: user.uid,
+        myWallet: user.wallet,
+      });
+      await this.$store.dispatch('onAuth');
+      this.showSendDialog = false;
+      this.showFader = false;
     },
     hiddenWallet() {
-      this.showDialog = false;
+      this.showWalletDialog = false;
+      this.showFader = false;
     },
     async logout() {
       await this.$store.dispatch('logout');

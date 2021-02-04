@@ -84,5 +84,31 @@ export default new Vuex.Store({
                 console.log(e);
             }
         },
+        async sendWallet(context, data) {
+            try {
+                const inputMoney = Number(data.inputMoney);
+
+                if (data.myUid === data.uid) {
+                    return "※自分に対して送れません";
+                } else if (data.myWallet < inputMoney) {
+                    return "※残金が足りません";
+                } else if (inputMoney <= 0) {
+                    return "※0よりも多い金額を入れてください";
+                } else if (!Number.isInteger(inputMoney)) {
+                    return "※整数を入力して下さい";
+                }
+
+                await firebase.database().ref('users').transaction(value => {
+                    value[data.myUid]["wallet"] = data.myWallet - inputMoney;
+                    value[data.uid]["wallet"] = data.wallet + inputMoney;
+                    return value;
+                });
+
+                return "送信が完了しました"
+            } catch (e) {
+                console.log(e);
+                return "※送信に失敗しました"
+            }
+        }
     }
 })
